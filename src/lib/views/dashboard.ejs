@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>POS</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/Shared/w3.css">
+<style>
+html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
+</style>
+<script language="JavaScript" type="text/javascript" src="assets/js/shared/jquery.min.js"></script>
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> POS</button>
+  <span class="w3-bar-item w3-right"><a href="/login">Logout</a></span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container w3-row">
+    <div class="w3-col s4">
+      <img src="assets/images/user.png" class="w3-circle w3-margin-right" style="width:46px">
+    </div>
+    <div class="w3-col s8 w3-bar">
+      <span>Welcome, <strong> <%= `${Data.User.firstname} ${Data.User.lastname}` %></strong></span><br>
+    </div>
+  </div>
+  <hr>
+  <div class="w3-container">
+    <h5 id="Page-Heading"></h5>
+  </div>
+  <%- include('components/Content/NavBar.ejs') %> 
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <%- include('components/Content/Aquisition.ejs') %>
+  
+  <div class="dynamic-section" id="DashBoard" style="display: none;">
+    <%- include('components/Content/DashBoard.ejs') %>
+  </div>
+
+  <div class="dynamic-section" id="UserManagement" style="display: none;">
+    <%- include('components/Content/UserManagement.ejs') %>
+  </div>
+  
+  <div class="dynamic-section" id="Settings" style="display: none;">
+    <%- include('components/Content/Settings.ejs') %>
+  </div>
+
+</div>
+
+
+<div class="w3-modal" id="NewUserModal">
+  <%- include('components/Modals/RegisterUserModal') %>
+</div>
+
+<script src="assets/js/dashboard/index.js"></script>
+<script src="assets/js/shared/ejs.js"></script>
+<script src="assets/js/UserManagement/index.js"></script>
+</body>
+</html>

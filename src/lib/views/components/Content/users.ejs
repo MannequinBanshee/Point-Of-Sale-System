@@ -1,0 +1,65 @@
+<table style="width: 100%;">
+    <tr>
+    <th>
+        Avatar
+    </th>
+    <th>
+        Username
+    </th>
+    <th>
+        First Name
+    </th>
+    <th>
+        Last Name
+    </th>
+    <th>
+        Date Created
+    </th>
+    <th>
+        Action
+    </th>
+    </tr>
+    <% for(const User of Users) {%>
+    <tr>
+    <td style="display: none ;">
+        <%= User.id %>
+    </td>
+    <td> 
+        <div class="w3-container w3-padding-16">
+        <img src="assets/images/user.png" class="w3-circle w3-margin-right" style="width:46px">
+        </div>
+    </td>
+
+    <td> 
+        <div class="w3-container w3-padding-16">
+        <%= User.username %>
+        </div>
+    </td>
+
+    <td> 
+        <div class="w3-container w3-padding-16">
+        <%= User.firstname %>
+        </div>
+    </td>
+
+    <td> 
+        <div class="w3-container w3-padding-16">
+        <%= User.lastname %>
+        </div>
+    </td>
+
+    <td> 
+        <div class="w3-container w3-padding-16">
+        <%= User.date %>
+        </div>
+    </td>
+
+    <td style="float: center;">
+        <div class="btn-group">
+        <button class="w3-button w3-green">Edit</button>
+        <button class="w3-button w3-green">Delete</button>       
+        </div>
+    </td>         
+    </tr>
+    <% } %>
+</table>

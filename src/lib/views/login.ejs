@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<title>POS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="assets/css/Shared/w3.css">
+<link rel="stylesheet" href="assets/css/Login/index.css">
+<body>
+
+  <div class="w3-modal" style="display: block;">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="max-width:600px">
+
+      <div class="w3-center"><br>
+        <img src="assets/images/pos-terminal.png" style="width:30%" class="w3-margin-top">
+      </div>
+
+      <form class="w3-container" action="/login" method="post">
+        <div class="w3-section">
+          <label><b>Username</b></label>
+          <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Enter Username" name="username" required>
+          <label><b>Password</b></label>
+          <input class="w3-input w3-border" type="password" placeholder="Enter Password" name="password" required>
+          <input  class="w3-button w3-block w3-green w3-section w3-padding" type="submit" value="Login">
+          <div>
+            <% if(Data){ %>
+            <% if(Data.isError){ %>
+              <label class="Login-Error-Message">
+                <%= Data.message %>
+              </label>
+            <% } %>
+            <% } %>
+          </div>          
+          <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> Remember me
+        </div>
+      </form>
+    </div>
+  </div>
+            
+</body>
+</html>

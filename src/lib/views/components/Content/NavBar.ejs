@@ -1,0 +1,59 @@
+<div class="w3-bar-block">
+      <% 
+
+        for(const access of Data.Access){
+
+          switch(access.AccessName){
+
+            case "DashBoard": %>
+
+            <button id="DashBoard-Bar" class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('DashBoard');"><i class="fa fa-users fa-fw"></i>  DashBoard</button>
+  
+            <%
+            break;
+  
+            case "Clients":  %>
+  
+            <button id="Clients-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Clients');"><i class="fa fa-eye fa-fw"></i>  Clients</button>
+  
+            <%
+            break;
+  
+            case "Accounts":  %>
+  
+            <button id="Accounting-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Accounting');"><i class="fa fa-users fa-fw"></i>  Accounting</button>
+  
+            <%
+            break;
+  
+            case "StockTake":  %>
+  
+            <button id="StockTake-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Stock Take');"><i class="fa fa-bank fa-fw"></i>  Stock Take</button>
+  
+            <%
+            break;
+  
+            case "UserManagement":  %>
+  
+            <button id="UserManagement-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('User Management');GetAllUsers();"><i class="fa fa-bank fa-fw"></i>  User Management</button>
+  
+            <%
+            break;
+  
+            case "MyProfile":  %>
+  
+            <button id="MyProfile-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('My Profile');"><i class="fa fa-history fa-fw"></i>  My Profile</button>
+  
+            <%
+            break;
+  
+            case "Settings":  %>
+  
+            <button id="Settings-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Settings');"><i class="fa fa-cog fa-fw"></i>  Settings</button>
+  
+            <%
+            break;
+          }
+        }
+    %>
+ </div>
