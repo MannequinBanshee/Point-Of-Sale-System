@@ -9,6 +9,7 @@ module.exports = async (req, h) => {
   {
     case "GET":
 
+    req.cookieAuth.clear();
     h.unstate('Authentication');
     return h.view("login",{'Data':{
     }});
@@ -30,7 +31,7 @@ module.exports = async (req, h) => {
         });
     }
     req.cookieAuth.set({'id': User.id.toString()});//only used for authentication
-    return h.redirect('/dashboard');
+    return h.redirect('/dashboard').state("CurrentSubPage","DashBoard");
     
     break;
   }

@@ -4,25 +4,31 @@ require("dotenv").config({ silent: true });
 module.exports = {
   env: process.env.NODE_ENV || "development",
   session_secret: process.env.SESSION_SECRET || '5e5a8867efe51312d176633352bc4e098a177e7be6538f077858eed32dfa8596',
+  rootUser: process.env.APPROOTUSERNAME || "root",
+  rootPassword: process.env.APPROOTPASSWORD || "secret",
 
   // Environment-dependent settings
   development: {
     db: {
       dialect: "mongodb",
-      username: "posmongo1",
-      password: "secret",
-      address: "127.0.0.1",
-      port: "27017",
-      database: "POS",
+      username: process.env.MONGODB_ROOT_USERNAME,
+      password: process.env.MONGODB_ROOT_PASSWORD,
+      address: process.env.DEV_DB_ADDRESS,
+      port: process.env.DEV_DB_PORT,
+      database: process.env.MONGODB,
     },
-    port: process.env.PORT || 3000,
+    port: process.env.DEV_PORT || 3000
   },
   production: {
     db: {
-      dialect: "sqlite",
-      storage: "db/database.sqlite"
+      dialect: "mongodb",
+      username: process.env.MONGODB_ROOT_USERNAME,
+      password: process.env.MONGODB_ROOT_PASSWORD,
+      address: process.env.PROD_DB_ADDRESS,
+      port: process.env.PROD_DB_PORT,
+      database: process.env.MONGODB,
     },
-    port: process.env.PORT || 4000,
+    port: process.env.PROD_PORT || 80
   }
 
 };

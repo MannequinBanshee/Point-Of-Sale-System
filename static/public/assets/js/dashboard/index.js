@@ -28,14 +28,14 @@ function switchSection(sectionid){
     var pageHeading = document.getElementById('Page-Heading');
     pageHeading.innerText = sectionid;
     var dynamicSections = document.getElementsByClassName('dynamic-section');
-    var barItems = document.getElementsByClassName('.switch');
+    var barItems = document.getElementsByClassName('switchNav');
     
        Array.from(barItems).forEach(baritem =>{
            if(baritem.id == `${sectionid.replace(' ','')}-Bar`){
-               baritem.classList = ".switch w3-bar-item w3-button w3-padding w3-blue";
+               baritem.classList = "switchNav w3-bar-item w3-button w3-padding w3-blue";
            }
            else{
-               baritem.classList = ".switch w3-bar-item w3-button w3-padding";
+               baritem.classList = "switchNav w3-bar-item w3-button w3-padding";
            }
     
        });
@@ -62,3 +62,4 @@ function ToggleModal(ModalID){
     modal.style.display = 'block'
   }
 }
+

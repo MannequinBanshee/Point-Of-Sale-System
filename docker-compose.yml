@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+
+    mongo:
+        container_name: mongo
+        image: mongo:latest
+        restart: always
+        networks:
+            pos-network:
+                ipv4_address: ${PROD_DB_ADDRESS}
+        command: 
+            mongod --bind_ip 127.0.0.1,${PROD_DB_ADDRESS}
+        volumes:
+            - data:/data/db
+            - config:/data/configdb
+            - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+        ports:
+            - ${PROD_DB_PORT}:27017
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: secret
+            MONGO_INITDB_DATABASE: POS
+
+    pos:
+        container_name: pos
+        image: pos
+        networks:
+            pos-network:
+                ipv4_address: ${APP_ADDRESS}
+        restart: always
+        build:
+            context: .
+            dockerfile: Dockerfile
+            target: base
+        ports:
+            - "${PROD_PORT}:${PROD_PORT}"
+        depends_on: 
+            - mongo
+
+networks:
+  pos-network:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 10.0.0.0/16
+        gateway: 10.0.0.1
+
+volumes:
+    data:
+    config:

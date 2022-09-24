@@ -1,0 +1,24 @@
+<div class="w3-center">
+  <div class="w3-panel">
+    <div class="w3-row-padding" style="margin:0 -16px;">
+        <h5>Accounts Management</h5>
+        <div class="w3-row-padding w3-margin-bottom">
+          <div class="w3-block w3-padding">
+            <div class="search m4">
+              <input id="ClientSearch" class="w3-input w3-border w3-padding" onkeyup="FilterClientSearch();" type="text" placeholder="Search...">
+              <button class="w3-button w3-teal"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+          <div class="w3-col w3-padding">
+            <div class="btn-group w3-right">
+              <button onclick="ToggleModal('NewClientModal');GetAllAvailableBarcodes();" class="w3-button w3-teal">Add Client</button>
+              <button onclick="" class="w3-button w3-teal"><i class="fa fa-refresh"></i></button>
+            </div>
+          </div>
+        </div>
+        <div id="ClientManagementTableContent" style="overflow-y: scroll;max-height: 400px;" class="w3-row-padding w3-margin-bottom">
+        </div>
+    </div>
+  </div>
+</div>
+

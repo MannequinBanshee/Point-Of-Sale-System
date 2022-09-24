@@ -1,0 +1,39 @@
+<div class="w3-modal-content w3-round w3-card-4 w3-animate-zoom" style="max-width:500px">
+    <span onclick="document.getElementById('NewIngredientModal').style.display='none'"
+    class="w3-button w3-display-topright">&times;</span>
+    <div class="w3-center"><br>
+    <img src="assets/images/grocery.png" style="width:30%" class="w3-margin-top">
+    </div>
+    <form class="w3-container" action="/Ingredient" method="post">
+    <div class="w3-section">
+        <label><b>Ingredient Name</b></label>
+        <input class="w3-input w3-border w3-margin-bottom" type="text" autocomplete="off" placeholder="Enter Ingredient Name" name="name" required>
+        <table style="width:100%;">
+            <tr>
+                <td>
+                    <label><b>Weight</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" autocomplete="off" type="number" placeholder="Enter Weight" name="weight" >
+                </td>
+                <td>
+                    <label><b>Standard Quantity</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" autocomplete="off" type="number" placeholder="Enter Quantity" name="quantity" >                   
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b>Price</b></label>
+                    <input class="w3-input w3-border w3-margin-bottom" autocomplete="off" type="number" placeholder="Enter Price" name="price" >
+                </td>
+
+            </tr>
+        </table>
+        <div id="BarcodeItem" style="margin-top: 20px;">
+        </div>
+        <div style="float: right">
+            <input class="w3-button w3-round w3-green w3-section w3-padding" type="submit" value="Add Ingredient">    
+        </div>
+    </div>
+    </form>
+
+
+</div>
