@@ -1,6 +1,6 @@
 
 const Path = require("path");
-const Dashboard = require("../controllers/dashboard");
+const {GetDashBoard} = require("../controllers/dashboard");
 
 module.exports =  [
       {
@@ -11,17 +11,17 @@ module.exports =  [
             mode: 'required',
           }
       },
-        handler: Dashboard
+        handler: GetDashBoard
       },
       {
-        method: "POST",
-        path: "/dashboard",
-        handler: Dashboard,
+        method: "GET",
+        path: "/dashboard/{CurrentSubPage}",
         options: {
           auth: {
-              mode: 'required'
-              }
+            mode: 'required',
+          }
+      },
+        handler: GetDashBoard
       }
-      }    
     ];
 

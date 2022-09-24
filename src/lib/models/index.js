@@ -8,26 +8,31 @@ const winston = require('../../logger');
 const mongoose = require("mongoose");
 var DBuri = `${dbSettings.dialect}://${dbSettings.username}:${dbSettings.password}@${dbSettings.address}:${dbSettings.port}/${dbSettings.database}`;
 const Role = require('./role');
+const User = require('./user');
 
  const TestDBConnect = async (error) => {
 
   winston.info(`Attempting connection to Database.`);
-
+  winston.info(`URI: ${DBuri}`);
     var Connected = false;
     
     const mongoosee = await mongoose.connect(DBuri).catch(error => {
       winston.error(error.message);
     })
 
-    var dbState = mongoosee.STATES[mongoosee.connection.readyState] 
+    if(mongoosee){
+      var dbState = mongoosee.STATES[mongoosee.connection.readyState] 
 
-    if(dbState == mongoosee.STATES[1]){
-      Connected = true
+      if(dbState == mongoosee.STATES[1]){
+        Connected = true
+      }
+      var state = Connected ? "up" : "down";
+      winston.info(`Database connection status ${state} and ${dbState}`);
+
     }
-    var state = Connected ? "up" : "down";
-    winston.info(`Database connection status ${state} and ${dbState}`);
 
     await PopulateModels();
+    await CheckForRootUser();
 
     return { 
       State: state, 
@@ -35,7 +40,6 @@ const Role = require('./role');
    }
 
 }
-  
 const Roles = [
   {AccessName: 'Accounts',AuthorityLevel: 'Standard'},
   {AccessName: 'Accounts',AuthorityLevel: 'Administrator'},
@@ -49,9 +53,6 @@ const Roles = [
   {AccessName: 'Settings',AuthorityLevel: 'Standard'},
   {AccessName: 'Settings',AuthorityLevel: 'Administrator'},
 
-  {AccessName: 'StockTake',AuthorityLevel: 'Standard'},
-  {AccessName: 'StockTake',AuthorityLevel: 'Administrator'},
-
   {AccessName: 'DashBoard',AuthorityLevel: 'Standard'},
   {AccessName: 'DashBoard',AuthorityLevel: 'Administrator'},
 
@@ -60,13 +61,12 @@ const Roles = [
 ];
 
 
-
 const PopulateModels = async(error) => {
 
-  await mongoose.connect(DBuri).then(mongoose => {
-
-    var dbState = mongoose.STATES[mongoose.connection.readyState] 
-    if(dbState == mongoose.STATES[1]){
+  const mongoosee = await mongoose.connect(DBuri)
+  if(mongoosee){
+    var dbState = mongoosee.STATES[mongoose.connection.readyState] 
+    if(dbState == mongoosee.STATES[1]){
 
       winston.info('Loading System Data Models');
 
@@ -75,27 +75,72 @@ const PopulateModels = async(error) => {
      .forEach(file => {
 
        const model = require(Path.join(__dirname, file));
-       winston.info(`Loaded Model: ${file.replace('.js','').toUpperCase()}`)
+       winston.info(`Loaded Model: ${file.replace('.js','').toUpperCase()}`);
 
      });
-
-     winston.info('Checking if user account roles are active');
+     winston.info('Checking if user account roles are present in DB');
         
-      Roles.forEach(async role =>{
-        var FoundRole = await Role.findOne({'AccessName': role.AccessName, 'AuthorityLevel': role.AuthorityLevel});
-       if(!FoundRole){
-         winston.info(`Adding Role: ${role.AccessName} ${role.AuthorityLevel}`);
-         Role.create(role);
-       }
+     for(const role of Roles){
+      var FoundRole = await Role.findOne({'AccessName': role.AccessName, 'AuthorityLevel': role.AuthorityLevel});
+      if(!FoundRole){
+        winston.info(`Adding Role: ${role.AccessName} ${role.AuthorityLevel}`);
+        Role.create(role);
+      }
+     }
+     winston.info('User Account active role check has been completed.');
+    }
+  }
 
-     });
-     winston.info('User Account active role check has been completed.') 
 
-    }})
 
 }
 
+const CheckForRootUser = async(error) =>{
+
+     winston.info('Checking for Root User Account');
+      var rootUsername = Settings.rootUser
+      var rootPassword = Settings.rootPassword
+      var Found = await User.findOne({username: rootUsername})
+      var adminRoles = [];
+      if(!Found){
+        winston.info('Root User not Found in DB.');
+
+          var FoundRoles = await Role.find({'AuthorityLevel': "Administrator"});
+          if(FoundRoles){
+            const RolesArray = Array.from(FoundRoles);
+            for(const roleFound of RolesArray){
+
+              adminRoles.push(roleFound._id.toString());
+
+            }
+
+          }
+        try{
+
+          winston.info('Creating Root User with Enviroment/Default Variables.');
+          User.create({
+            username:rootUsername,
+            firstname:"root",
+            lastname:"user",
+            email:"N/A",
+            password:rootPassword,
+            roles: adminRoles
+          });
+
+          winston.info('Root User Created Successfully');
+        }
+        catch(e){
+          throw e;
+        }
+
+        return null
+      }
+     winston.info('Root User Found in DB. Continuing...') 
+    return null;
+};
+
 module.exports = {
   TestDBConnect,
-  PopulateModels
+  PopulateModels,
+  CheckForRootUser
 }

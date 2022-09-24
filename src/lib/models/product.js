@@ -10,7 +10,15 @@ const mongoose = require("mongoose");
       required: true,
     },
     Ingredients: {
-      type: mongoose.Schema.Types.Array,
+      type: [mongoose.Schema.Types.ObjectId],
+      required: false,
+    },
+    Image: {
+      type: 
+      {
+        data: mongoose.Schema.Types.Buffer,
+        contentType: mongoose.Schema.Types.String
+      },
       required: false,
     },
    Cost: {     
@@ -21,6 +29,11 @@ const mongoose = require("mongoose");
     Vat: {
       type: Boolean,
       default: false,
+    },
+    Purchases:{
+      type: mongoose.Schema.Types.Number,
+      required: true,
+      default: 0,
     }
   });
 

@@ -1,57 +1,111 @@
 <div class="w3-bar-block">
       <% 
 
-        for(const access of Data.Access){
+        for(const access of Data.Access.sort((a,b) => { 
+    
+          if(a.AccessName.toUpperCase() > b.AccessName.toUpperCase()){
+              return 1;
+          }
+
+          if(b.AccessName.toUpperCase() > a.AccessName.toUpperCase()){
+              return -1;
+          }
+
+          return 0;
+
+          })){
 
           switch(access.AccessName){
 
-            case "DashBoard": %>
+            case "DashBoard":
 
-            <button id="DashBoard-Bar" class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('DashBoard');"><i class="fa fa-users fa-fw"></i>  DashBoard</button>
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+            <button id="DashBoard-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('DashBoard');"><i class="fa fa-dashboard fa-fw"></i>  DashBoard</button>
+              
+            <% }else{ %>
+
+            <button id="DashBoard-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('DashBoard');"><i class="fa fa-dashboard fa-fw"></i>  DashBoard</button>
   
-            <%
+            <% }
+            break;
+
+            case "Products":
+
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="Products-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('Products');"><i class="fa fa-cutlery fa-fw"></i>  Products</button>
+                
+              <% }else{ %>
+  
+              <button id="Products-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('Products');"><i class="fa fa-cutlery fa-fw"></i>  Products</button>
+    
+            <% }
+            break;
+
+            case "Accounts": 
+  
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="Accounts-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('Accounts');GetAllClients();AutoRefreshClients();"><i class="fa fa-shopping-cart fa-fw"></i>  Accounts</button>
+                
+              <% }else{ %>
+  
+              <button id="Accounts-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('Accounts');GetAllClients();AutoRefreshClients();"><i class="fa fa-shopping-cart fa-fw"></i>  Accounts</button>
+    
+            <% }
             break;
   
-            case "Clients":  %>
+            case "StockTake": 
   
-            <button id="Clients-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Clients');"><i class="fa fa-eye fa-fw"></i>  Clients</button>
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="StockTake-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('StockTake');"><i class="fa fa-barcode fa-fw"></i>  Stock Take</button>
+                
+              <% }else{ %>
   
-            <%
+              <button id="StockTake-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('StockTake')"><i class="fa fa-barcode fa-fw"></i>  Stock Take</button>
+    
+            <% }
             break;
   
-            case "Accounts":  %>
+            case "UserManagement":
   
-            <button id="Accounting-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Accounting');"><i class="fa fa-users fa-fw"></i>  Accounting</button>
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="UserManagement-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('UserManagement');GetAllUsers();AutoRefreshUsers();"><i class="fa fa-users fa-fw"></i>  User Management</button>
+                
+              <% }else{ %>
   
-            <%
+              <button id="UserManagement-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('UserManagement');GetAllUsers();AutoRefreshUsers();"><i class="fa fa-users fa-fw"></i>  User Management</button>
+    
+            <% }
             break;
   
-            case "StockTake":  %>
+            case "MyProfile":
   
-            <button id="StockTake-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Stock Take');"><i class="fa fa-bank fa-fw"></i>  Stock Take</button>
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="MyProfile-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('MyProfile');"><i class="fa fa-users fa-fw"></i>  My Profile</button>
+                
+              <% }else{ %>
   
-            <%
+              <button id="MyProfile-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('MyProfile');"><i class="fa fa-users fa-fw"></i>  My Profile</button>
+    
+            <% }
             break;
   
-            case "UserManagement":  %>
+            case "Settings":
   
-            <button id="UserManagement-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('User Management');GetAllUsers();"><i class="fa fa-bank fa-fw"></i>  User Management</button>
+            if(Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase()){ %>
+
+              <button id="Settings-Bar" class="switchNav w3-bar-item w3-button w3-padding w3-blue" onclick="switchSection('Settings');"><i class="fa fa-gears fa-fw"></i>  Settings</button>
+                
+              <% }else{ %>
   
-            <%
-            break;
-  
-            case "MyProfile":  %>
-  
-            <button id="MyProfile-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('My Profile');"><i class="fa fa-history fa-fw"></i>  My Profile</button>
-  
-            <%
-            break;
-  
-            case "Settings":  %>
-  
-            <button id="Settings-Bar"  class=".switch w3-bar-item w3-button w3-padding" onclick="switchSection('Settings');"><i class="fa fa-cog fa-fw"></i>  Settings</button>
-  
-            <%
+              <button id="Settings-Bar" class="switchNav w3-bar-item w3-button w3-padding" onclick="switchSection('Settings');"><i class="fa fa-gears fa-fw"></i>  Settings</button>
+    
+            <% }
             break;
           }
         }

@@ -1,0 +1,93 @@
+<table id="UserManagementTable" style="width: 100%;">
+    <tr>
+    <th>
+        Avatar
+    </th>
+    <th>
+        Username
+    </th>
+    <th>
+        First Name
+    </th>
+    <th>
+        Last Name
+    </th>
+    <th>
+        Date Created
+    </th>
+    <th>
+        Athority
+    </th>
+    <th>
+        Action
+    </th>
+    </tr>
+    <% for(const User of Users.sort((a,b) => { 
+    
+        if(a.username.toUpperCase() > b.username.toUpperCase()){
+            return 1
+        }
+        if(b.username.toUpperCase() > a.username.toUpperCase()){
+            return -1
+        }
+            return 0
+    }))
+
+    {%>
+    <tr>
+    <td style="display: none ;">
+        <%= User.id %>
+    </td>
+    <td> 
+        <div class="w3-container w3-padding-16 w3-center">
+
+        <% if(User.isAdmin){ %>
+
+            <img src="assets/images/admin.png" class="w3-square w3-margin-right" style="width:46px">
+
+        <% } else{ %>
+
+            <img src="assets/images/staff.png" class="w3-square w3-margin-right" style="width:46px">
+
+        <% } %>
+
+        </div>
+    </td>
+
+    <td> 
+        <%= User.username %>
+    </td>
+
+    <td> 
+        <%= User.firstname %>
+    </td>
+
+    <td> 
+        <%= User.lastname %>
+    </td>
+
+    <td> 
+        <%= User.date %>
+    </td>
+
+    <td> 
+        <% if(User.isAdmin){ %>
+
+            Administrator
+
+        <% } else{ %>
+
+            Standard
+
+        <% } %>
+    </td>
+
+    <td>
+        <div class="btn-group-center">
+            <button class="w3-button w3-orange">&nbsp Edit &nbsp</button>
+            <button class="w3-button w3-red" onclick="DeleteUser('<%= User.id %>');">Delete</button>     
+        </div>
+    </td>         
+    </tr>
+    <% } %>
+</table>
