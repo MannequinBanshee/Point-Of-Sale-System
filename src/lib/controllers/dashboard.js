@@ -3,12 +3,15 @@
 const winston = require('../../logger');
 const user = require('../controllers/User/user');
 const management = require('../controllers/User/management');
+const Settings = require('../../settings')
 const Role = require('../models/role');
 
-module.exports = async (req, h) => {
+
+
+const GetDashBoard = async(req,h) =>{
 
     var UserID = req.state.Authentication.id;
-    
+
     if(!UserID){
         h.unstate('Authentication');
         return h.redirect('/login',{'Data':{
@@ -17,10 +20,11 @@ module.exports = async (req, h) => {
           }
           });
     }
-
+        
     var Access = [];
     var User = await user.GetUserByID(UserID);
     var Roles = await Role.find({}).sort({'AccessName': 1});
+
 
     for(const userRole of User.roles){
         const roleIndex = Roles.findIndex(r => r.id == userRole.id);
@@ -29,11 +33,26 @@ module.exports = async (req, h) => {
         }        
     }
 
-    return h.view("dashboard",{Data:{
+    var CurrentSubPage = "DashBoard";
+    if(req.state.CurrentSubPage){
+        CurrentSubPage = req.state.CurrentSubPage;
+    }
+
+
+    var PageData = {Data:{
         'User' : User,
         'message': "",
         'isError': false,
-        'Access': Access
-    }});
-    
+        'Access': Access,
+        'Roles':Roles,
+        'CurrentSubPage': CurrentSubPage
+    }};
+
+    return h.view("dashboard",PageData);
+}
+
+
+
+module.exports =  {
+    GetDashBoard
 };
