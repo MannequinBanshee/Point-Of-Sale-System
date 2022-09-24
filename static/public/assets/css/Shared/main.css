@@ -1,0 +1,55 @@
+.btn-group-center button{
+    padding: 10px 24px;
+    float: center;
+  }
+
+  .btn-group-left button{
+    padding: 10px 24px;
+    float: left;
+    max-width: 50%;
+  }
+
+  .btn-group-right button{
+    padding: 10px 24px;
+    float: right;
+  }
+  
+  .btn-group:after{
+    content: "";
+    clear: both;
+    display: table;
+  }
+  
+  .btn-group button:not(:last-child){
+  border-right: none;
+  }
+  
+  .td{
+    width: 16.6666%;
+  }
+  .th{
+    width: 16.6666%;
+    text-align: center;
+  }
+
+.search{
+width: 100%;
+margin-left: auto;
+margin-right: auto;
+}
+
+  .search input {
+    float: left;
+    width: 80%;
+  }
+  
+  .search  button {
+    float: left;
+    padding-top: 10px;
+  }
+    
+  .search ::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
