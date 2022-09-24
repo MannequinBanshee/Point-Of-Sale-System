@@ -1,0 +1,21 @@
+<table>
+    <tr>
+        <td style="width:45%;">
+            <label><b>Available Barcodes</b></label>
+        </td>
+    <tr>
+        <td style="width:80%;">
+            <input id="SelectAvailableBarcode" class="w3-input w3-border" autocomplete="off" type="search" list=SuggestedBarcodes placeholder="Scan Barcode on Card" name="barcode" required>
+            <datalist id="SuggestedBarcodes">
+                <%for(const Barcode of Barcodes){ %>               
+                <option  
+                <%=`data=${Barcode.id}`%> 
+                ><%= `${Barcode.name}` %></option>
+                <%}%>
+            </datalist>  
+        </td>
+        <td style="width:10%;">
+            <button type="button" class="w3-button w3-red" >new</button> 
+        </td>
+    </tr>
+</table> 

@@ -5,6 +5,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="assets/css/Shared/w3.css">
+<link rel="stylesheet" href="assets/css/Shared/main.css">
+<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+<script src="assets/js/dashboard/Aquisition.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -22,7 +25,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
   <div class="w3-container w3-row">
     <div class="w3-col s4">
-      <img src="assets/images/user.png" class="w3-circle w3-margin-right" style="width:46px">
+        <% if(Data.User.isAdmin){ %>
+
+            <img src="assets/images/admin.png" class="w3-square w3-margin-right" style="width:60px">
+
+        <% } else{ %>
+
+            <img src="assets/images/staff.png" class="w3-square w3-margin-right" style="width:60px">
+
+        <% } %>
     </div>
     <div class="w3-col s8 w3-bar">
       <span>Welcome, <strong> <%= `${Data.User.firstname} ${Data.User.lastname}` %></strong></span><br>
@@ -30,7 +41,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
   </div>
   <hr>
   <div class="w3-container">
-    <h5 id="Page-Heading"></h5>
+    <h5 id="Page-Heading"><%= Data.CurrentSubPage %></h5>
   </div>
   <%- include('components/Content/NavBar.ejs') %> 
 </nav>
@@ -42,29 +53,110 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
-  <%- include('components/Content/Aquisition.ejs') %>
-  
-  <div class="dynamic-section" id="DashBoard" style="display: none;">
-    <%- include('components/Content/DashBoard.ejs') %>
-  </div>
 
-  <div class="dynamic-section" id="UserManagement" style="display: none;">
-    <%- include('components/Content/UserManagement.ejs') %>
-  </div>
+  <%- include('components/Content/Aquisition') %>
   
-  <div class="dynamic-section" id="Settings" style="display: none;">
-    <%- include('components/Content/Settings.ejs') %>
-  </div>
+
+  <% 
+
+  for(const access of Data.Access){
+
+    switch(access.AccessName){
+
+      case "DashBoard": %>
+
+        <div class="dynamic-section" id="DashBoard" 
+        <%= Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase() ? `style=display:block` : `style=display:none` ;%>
+        >
+          <%- include('components/Content/DashBoard') %>
+        </div>
+
+      <%
+      break;
+
+      case "Products": %>
+
+
+        <div class="dynamic-section" id="Products" style="display: none;">
+          <%- include('components/Content/Products/ProductManagement.ejs') %>
+        </div>
+
+        <div class="w3-modal" id="NewProductModal">
+          <%- include('components/Modals/RegisterProductModal') %>
+        </div>
+
+        <div class="w3-modal" id="NewIngredientModal">
+          <%- include('components/Modals/RegisterIngredientModal') %>
+        </div>
+
+      <%
+      break;
+
+      case "Accounts":  %>
+
+      <div class="dynamic-section" id="Accounts"
+      <%= Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase() ? `style=display:block` : `style=display:none`; %>
+      >
+        <%- include('components/Content/Accounts/AccountsManagement') %>
+      </div>      
+
+      <div class="w3-modal" id="NewClientModal">
+        <%- include('components/Modals/RegisterClientModal') %>
+      </div>
+
+
+      <%
+      break;
+
+      case "StockTake":  %>
+
+      <%
+      break;
+
+      case "UserManagement":  %>
+      
+        <div class="dynamic-section" id="UserManagement"
+        <%= Data.CurrentSubPage.toUpperCase() == access.AccessName.toUpperCase() ? `style=display:block` : `style=display:none` ;%>
+        >
+          <%- include('components/Content/Users/UserManagement') %>
+        </div>
+
+        <div class="w3-modal" id="NewAdminModal">
+          <%- include('components/Modals/RegisterAdminModal') %>
+        </div>
+
+        <div class="w3-modal" id="NewStaffModal">
+          <%- include('components/Modals/RegisterStaffModal') %>
+        </div>
+
+      <%
+      break;
+
+      case "MyProfile":  %>
+
+      <%
+      break;
+
+      case "Settings":  %>
+
+      <div class="dynamic-section" id="Settings" style="display: none;">
+        <%- include('components/Content/Settings') %>
+      </div>
+
+      <%
+      break;
+    }
+  }
+%>
+
 
 </div>
 
-
-<div class="w3-modal" id="NewUserModal">
-  <%- include('components/Modals/RegisterUserModal') %>
-</div>
 
 <script src="assets/js/dashboard/index.js"></script>
 <script src="assets/js/shared/ejs.js"></script>
 <script src="assets/js/UserManagement/index.js"></script>
+<script src="assets/js/ProductManagement/index.js"></script>
+<script src="assets/js/AccountManagement/index.js"></script>
 </body>
 </html>
