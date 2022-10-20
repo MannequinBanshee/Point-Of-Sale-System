@@ -22,21 +22,27 @@ services:
             MONGO_INITDB_ROOT_PASSWORD: secret
             MONGO_INITDB_DATABASE: POS
 
-    pos:
+    pointofsale:
         container_name: pos
-        image: pos
+        image: mannequinbanshee/pointofsale
         networks:
             pos-network:
                 ipv4_address: ${APP_ADDRESS}
-        restart: always
+        volumes:
+            - appdata:/app
         build:
             context: .
             dockerfile: Dockerfile
             target: base
+            tags:
+              - "mannequinbanshee/pointofsale"
         ports:
             - "${PROD_PORT}:${PROD_PORT}"
         depends_on: 
             - mongo
+
+            
+            
 
 networks:
   pos-network:
@@ -49,3 +55,4 @@ networks:
 volumes:
     data:
     config:
+    appdata:
