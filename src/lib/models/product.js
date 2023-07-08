@@ -1,36 +1,28 @@
 const mongoose = require("mongoose");
 
   const ProductSchema = new mongoose.Schema({
-    Name: {
+    name: {
       type: String,
       required: true,
     },
-    Type: {
+    type: {
       type: String,
       required: true,
     },
-    Ingredients: {
+    ingredients: {
       type: [mongoose.Schema.Types.ObjectId],
       required: false,
     },
-    Image: {
-      type: 
-      {
-        data: mongoose.Schema.Types.Buffer,
-        contentType: mongoose.Schema.Types.String
-      },
-      required: false,
-    },
-   Cost: {     
+   cost: {     
      type: mongoose.Schema.Types.Decimal128,
      required: true,
      default: 0.00,
-     },
-    Vat: {
+    },
+    vat: {
       type: Boolean,
       default: false,
     },
-    Purchases:{
+    purchases:{
       type: mongoose.Schema.Types.Number,
       required: true,
       default: 0,

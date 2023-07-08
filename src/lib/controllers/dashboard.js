@@ -35,7 +35,9 @@ const GetDashBoard = async(req,h) =>{
 
     var CurrentSubPage = "DashBoard";
     if(req.state.CurrentSubPage){
-        CurrentSubPage = req.state.CurrentSubPage;
+        if(req.state.CurrentSubPage != CurrentSubPage){
+            CurrentSubPage = req.state.CurrentSubPage.toString();
+        }
     }
 
 
@@ -52,7 +54,41 @@ const GetDashBoard = async(req,h) =>{
 }
 
 
+const UpdateCurrentSubPage = async(req,h) =>{
+
+    var CurrentSubPage = req.params.SubPageName;
+    var UserID = req.state.Authentication.id;
+
+    if(!UserID){
+        h.unstate('Authentication');
+        return h.redirect('/login',{'Data':{
+            'message': "Invalid Credentials",
+            'isError': true
+          }
+          });
+    }
+
+    var Access = [];
+    var User = await user.GetUserByID(UserID);
+    var Roles = await Role.find({}).sort({'AccessName': 1});
+
+    for(const userRole of User.roles){
+        const roleIndex = Roles.findIndex(r => r.id == userRole.id);
+        if(roleIndex > -1){
+            Access.push(`${Roles[roleIndex].AccessName}`);
+        }        
+    }
+
+    if(Access.includes(CurrentSubPage)){
+
+        return h.redirect('/dashboard').state("CurrentSubPage",CurrentSubPage);
+    }
+
+    return false;
+}
+
 
 module.exports =  {
-    GetDashBoard
+    GetDashBoard,
+    UpdateCurrentSubPage
 };

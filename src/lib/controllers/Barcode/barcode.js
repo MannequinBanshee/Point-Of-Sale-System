@@ -29,6 +29,7 @@ const AddBarcode = async(request,response) => {
 
 }
 
+
 const UpdateBarcode = async(request,response) => {
 
 }

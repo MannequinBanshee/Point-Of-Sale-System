@@ -16,6 +16,7 @@ module.exports = {
       address: process.env.DEV_DB_ADDRESS,
       port: process.env.DEV_DB_PORT,
       database: process.env.MONGODB,
+      ssl: process.env.ENABLE_DB_SSL
     },
     port: process.env.DEV_PORT || 3000
   },
@@ -27,6 +28,7 @@ module.exports = {
       address: process.env.PROD_DB_ADDRESS,
       port: process.env.PROD_DB_PORT,
       database: process.env.MONGODB,
+      ssl: process.env.ENABLE_DB_SSL
     },
     port: process.env.PROD_PORT || 80
   }

@@ -1,0 +1,41 @@
+<tr id="<%= Product.id %>-Row">
+    <td style="display: none ;">
+        <%= Product.id %>
+    </td>
+    <td class="w3-center">
+        <div class="w3-container w3-padding-16">
+            <label id="<%= Product.id %>-Quantity">
+                1
+            </label>
+        </div>
+
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+        <%= Product.name %>
+        </div>
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+            <label id="<%= Product.id %>-Price">
+                <%= `R${parseFloat(Product.price)}` %>
+            </label>
+        </div>
+    </td>
+
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+            <label id="<%= Product.id %>-SubTotal">
+                <%= `R${parseFloat(Product.price)}` %>
+            </label>
+        </div>
+    </td>
+    <td class="w3-center" style="margin-top: auto;margin-bottom: auto;">
+        <div class="w3-panel">
+            <div class="btn-group">
+                <button class="w3-button w3-teal" onclick="PurchaseQuantity('<%= Product.id %>',true);CalculateChange();" type="button"><i class="fa fa-angle-double-up"></i></button>
+                <button class="w3-button w3-red" onclick="PurchaseQuantity('<%= Product.id %>',false);CalculateChange();" type="button"><i class="fa fa-angle-double-down"></i></button>      
+            </div>
+        </div>
+    </td>   
+</tr>

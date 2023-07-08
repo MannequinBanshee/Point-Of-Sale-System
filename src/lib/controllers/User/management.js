@@ -55,7 +55,8 @@ const GetAllUsers = async (req,h) => {
         }
     
         return h.view('components/Content/Users/users',{
-            'Users':Users      
+            'Users':Users,
+            'CurrentUser':CurrentUser 
         });
 
     }
@@ -73,11 +74,50 @@ const GetAllClients = async (req,h) => {
         }
 
         return h.view('components/Content/Accounts/clients',{
-            'Clients':Clients      
+            'Clients':Clients,
+            'User':CurrentUser
         });
 
     }
 }
+
+const GetAllClientsAquisition = async (req,h) => {
+
+    var UserID = req.state.Authentication.id;
+    var CurrentUser = await user.GetUserByID(UserID);
+    var ClientsinDebt = 0;
+    var ClientsinCredit = 0;
+    var ClientsTotal = 0;
+    var TotalAccountBalance = 0.00;
+    if(CurrentUser){
+        const Clients = new Array;
+        var clientids = await Client.find({}).select('id');
+        for(const clientid of clientids){
+
+          var FoundClient = await client.GetClientByID(clientid);
+          if(FoundClient){
+            FoundClient.balance >= 0 ? ClientsinCredit++ : ClientsinDebt++;
+            ClientsTotal++
+            TotalAccountBalance += parseFloat(FoundClient.balance);
+
+          } 
+        }
+    }
+
+    var AquisitionData = {"ClientsinDebt": ClientsinDebt,
+    "ClientsinCredit":ClientsinCredit,
+    "ClientsTotal":ClientsTotal,
+    "TotalAccountBalance": TotalAccountBalance
+    }
+
+    return h.view('components/Content/Aquisition',{
+        'AquisitionData':AquisitionData,
+    });
+
+}
+
+
+
 
 const GetAllRoles= async (req,h) => {
 
@@ -137,7 +177,11 @@ const GetRole = async (req,h) => {
     
 }
 
-
+const GetClientForEditing = async (req,h) => {
+    var ClientID = req.params.id
+    var Found = await client.GetClientByID(ClientID);
+    return Found;
+}
 
 const CheckifExists = async(UsersArray,newUser) => {
     
@@ -152,5 +196,7 @@ module.exports = {
     GetAllRoles,
     GetRole,
     GetALLRolesByAuthorityLevel,
-    GetAllClients
+    GetAllClients,
+    GetAllClientsAquisition,
+    GetClientForEditing
 };

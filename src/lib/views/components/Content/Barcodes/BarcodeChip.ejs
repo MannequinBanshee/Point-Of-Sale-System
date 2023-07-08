@@ -1,8 +1,7 @@
 <div class="w3-card w3-center w3-round" style="margin-block: 5px ;">
     <h3 class="w3-center"><b>Ingredient Barcode</b></h3>
-    <img <%=`src=${Barcode.canvasPath}` %> alt="Person" style="width:30%">
-    <input class="barcodechip" hidden
-    <%= `value='${Barcode.id}'` %>
+    <h3><%= `${Barcode.name}` %> </h3>
+    <input id="BarcodeChipID" class="barcodechip" hidden
+    <%= `value=${Barcode.id}` %> name="barcodeid"
     >
-    <%=Barcode.canvas %>
 </div>

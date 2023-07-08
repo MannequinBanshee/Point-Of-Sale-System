@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
       required: true,
     },
     Mass: {
-      type: String,
+      type: mongoose.Schema.Types.Decimal128,
       required: true,
     },
     Quantity: {

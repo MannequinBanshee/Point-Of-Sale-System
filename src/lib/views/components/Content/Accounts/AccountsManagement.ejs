@@ -11,8 +11,9 @@
           </div>
           <div class="w3-col w3-padding">
             <div class="btn-group w3-right">
-              <button onclick="ToggleModal('NewClientModal');GetAllAvailableBarcodes();" class="w3-button w3-teal">Add Client</button>
-              <button onclick="" class="w3-button w3-teal"><i class="fa fa-refresh"></i></button>
+              <button class="w3-button w3-green w3-round">Export</button>
+              <button onclick="ToggleModal('NewClientModal');GetAllAvailableBarcodes();" class="w3-button w3-teal w3-round">Add Client</button>
+              <button onclick="ToggleModal('LoaderModal');RefreshClients();" class="w3-button w3-teal w3-round"><i class="fa fa-refresh"></i></button>
             </div>
           </div>
         </div>

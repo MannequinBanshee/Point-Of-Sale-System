@@ -1,0 +1,78 @@
+<div class="w3-modal-content w3-round w3-card-4 w3-animate-zoom" style="min-width: 90%;">
+    <span onclick="document.getElementById('ProductCardPurchaseModal').style.display='none'"
+    class="w3-button w3-display-topright w3-round">&times;</span>
+    <div class="w3-center">
+    <h2><b>Place Order</b></h2>
+    </div>
+    <form id="CardProductPurchaseForm" class="w3-container" onsubmit="return false">
+        <div class="w3-section">
+            <div id="CardPurchaseProductsList">
+
+            </div>
+            <div class="w3-row-padding w3-margin-bottom w3-center">
+                <div id="VisualizeSelectedProducts" class="w3-round w3-panel w3-card-4 margin-bottom">
+                    <h4>Product List</h4>
+                    <div style="min-height: 100px;max-height: 300px;overflow-y: scroll;">
+                        <table id="ClientPurchaseProduct"  class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white w3-margin-bottom" style="width: 100%;table-layout: fixed;">
+                            <tr>
+                                <th class="w3-center">
+                                    Quantity
+                                </th>
+                                <th class="w3-center">
+                                    Name
+                                </th>
+                                <th class="w3-center">
+                                    Price
+                                </th>
+                                <th class="w3-center">
+                                    Subtotal
+                                </th>
+                                <th class="w3-center">
+                                    <i class="fa fa-angle-double-up"></i><i class="fa fa-angle-double-down"></i>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div> 
+            <div class="w3-row-padding w3-margin-bottom">
+                <div class="w3-col m3">
+                    <label>Amount Due</label>
+                    <input id="PurchaseProductTotalCosting" class="w3-input" type="text" onchange="CalculateChange();" value="0" name="TotalCosting" placeholder="R0.00" readonly>  
+                </div>  
+                <div class="w3-col m3">
+                    <label>Customer Balance</label>
+                    <input id="PurchaseProductClientBalance" class="w3-input" type="text" value="0" name="ClientBalance" placeholder="R0.00" readonly> 
+                    <input id="PurchaseProductClientID" value="0" name="Clientid" hidden>     
+                </div> 
+                <div class="w3-col m3">
+                    <label>Payment Amount</label>
+                    <input id="PurchaseProductTotalPayment" class="w3-input" type="text" onkeyup="CalculateChange()" value="0" name="TotalPayment" placeholder="R0.00">    
+                </div>  
+                <div class="w3-col m3">
+                    <label>Change</label>
+                    <input id="PurchaseProductTotalChange" class="w3-input " type="text" onkeyup="CalculateChange()" value="0" name="TotalChange" placeholder="R0.00">    
+                </div>  
+            </div>
+            <div style="float: right;">
+                <div class="w3-padding">
+                    <label class="container">Cash
+                        <input id="RadioButtonCash" type="radio" name="radio" disabled>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Card
+                        <input id="RadioButtonCard" type="radio" name="radio" disabled>
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="container">Credit
+                        <input id="RadioButtonCredit" type="radio" checked="checked" name="radio">
+                        <span class="checkmark"></span>
+                    </label>  
+                </div>
+                  <div class="btn-group" style="float: right;">
+                    <input id="PlaceNewClientOrderButton" class="w3-button w3-round w3-green w3-section w3-padding w3-round" type="submit" value="Place Order" >    
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

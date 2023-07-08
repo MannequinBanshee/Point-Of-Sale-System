@@ -1,49 +1,33 @@
 async function UpdateDashBoardDetails(){
-
     setTimeout(async() =>{
-  
-      var AccountBalanceAquisition = document.getElementById('AccountBalanceAquisition')
-      var AccountDebtAquisition = document.getElementById('AccountDebtUsersAquisition')
-      var AccountCreditAquisition = document.getElementById('AccountCreditUsersAquisition')
-      var TotalSalesAquisition = document.getElementById('TotalSalesAquisition')
+      try{
+        await GetSalesDataAquisition();
+      }
+      catch{
 
-      var TotalSales = parseInt(TotalSalesAquisition.innerText)
+      }
+      finally{
+        UpdateDashBoardDetails();
+      }
 
-
-      var QuantityRandomPositive = Math.round(Math.random()*100);
-      var QuantityRandomNegative = Math.round(Math.random()*100);
-
-        if(QuantityRandomPositive < QuantityRandomNegative)
-        {
-
-          AccountDebtAquisition.innerText = (parseInt(AccountDebtAquisition.innerText) + 1).toString();
-          AccountCreditAquisition.innerText = (100 - parseInt(AccountDebtAquisition.innerText)).toString();
-          AccountBalanceAquisition.innerText = ((parseInt(AccountBalanceAquisition.innerText) + QuantityRandomPositive) - QuantityRandomNegative);
-          TotalSales++
-          TotalSalesAquisition.innerText = TotalSales;
-        }
-        else{
-          if(QuantityRandomNegative != QuantityRandomPositive)
-          {
-            AccountDebtAquisition.innerText = (parseInt(AccountDebtAquisition.innerText) - 1).toString();
-            AccountCreditAquisition.innerText = (100 - parseInt(AccountDebtAquisition.innerText)).toString();
-            AccountBalanceAquisition.innerText = ((parseInt(AccountBalanceAquisition.innerText) + QuantityRandomPositive )- QuantityRandomNegative);
-            TotalSales++
-            TotalSalesAquisition.innerText = TotalSales;
-          }
-
-        }
+    },1000);
+}
 
 
-        if(parseInt(AccountCreditAquisition.innerText) >= 100 || parseInt(AccountDebtAquisition.innerText) <= 0){
+async function GetSalesDataAquisition(){
 
-            AccountDebtAquisition.innerText = QuantityRandomPositive;
-            AccountCreditAquisition.innerText = (100 - parseInt(AccountDebtAquisition.innerText)).toString();
-            AccountBalanceAquisition.innerText = parseInt(AccountBalanceAquisition.innerText)- (QuantityRandomPositive + QuantityRandomNegative);
-        }
+  const result = await $.ajax({
+    url: `/client/all/aquisition`,
+    type: 'GET'
+  });
 
-      UpdateDashBoardDetails();
-    },400);
-  
-  
+  if(result){
+    html = result;
+    document.getElementById('SalesDataAquisition').innerHTML = html;
+
+    return true
   }
+  return false;
+}
+
+

@@ -31,7 +31,7 @@ module.exports = async (req, h) => {
         });
     }
     req.cookieAuth.set({'id': User.id.toString()});//only used for authentication
-    return h.redirect('/dashboard').state("CurrentSubPage","DashBoard");
+    return h.redirect('/dashboard')
     
     break;
   }

@@ -1,17 +1,28 @@
 
 const Path = require("path");
 const {GetAllIngredients,GetIngredient} = require('../controllers/Product/management');
+const {CreateNewIngredient,DeleteIngredient} = require('../controllers/Product/ingredient')
 
 module.exports =  [
       {
         method: "GET",
-        path: "/incredient/{id}",
+        path: "/ingredient/{id}",
         options: {
             auth: {
               mode: 'required',
             }
         },
         handler: GetIngredient
+      },
+      {
+        method: "DELETE",
+        path: "/ingredient/{id}",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: DeleteIngredient
       },
       {
         method: "GET",
@@ -22,6 +33,16 @@ module.exports =  [
             }
         },
         handler: GetAllIngredients
+      },
+      {
+        method: "POST",
+        path: "/ingredient/new",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: CreateNewIngredient
       }
 
 ]

@@ -1,7 +1,7 @@
 
 const Path = require("path");
 const {GetClientByID,UpdateClient,AddClient,DeleteClient} = require("../controllers/User/client")
-const {GetAllClients} = require('../controllers/User/management');
+const {GetAllClients,GetAllClientsAquisition,GetClientForEditing} = require('../controllers/User/management');
 
 module.exports =  [
       {
@@ -16,6 +16,16 @@ module.exports =  [
       },
       {
         method: "GET",
+        path: "/client/edit/{id}",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: GetClientForEditing
+      },
+      {
+        method: "GET",
         path: "/client/all",
         options: {
             auth: {
@@ -23,6 +33,16 @@ module.exports =  [
             }
         },
         handler: GetAllClients
+      },
+      {
+        method: "GET",
+        path: "/client/all/aquisition",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: GetAllClientsAquisition
       },
       {
         method: "POST",

@@ -1,25 +1,28 @@
-<table id="ClientManagementTable" style="width: 100%;">
+<table id="ClientManagementTable" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" style="width: 100%;">
     <tr>
-    <th>
+    <th class="w3-center">
         Avatar
     </th>
-    <th>
+    <th class="w3-center">
         First Name
     </th>
-    <th>
+    <th class="w3-center">
         Last Name
     </th>
-    <th>
+    <th class="w3-center">
         Current Balance
     </th>
-    <th>
+    <th class="w3-center">
         Credit Rating
     </th>
-    <th>
+    <th class="w3-center">
         Barcode ID
     </th>
-    <th>
-        Action
+    <th class="w3-center">
+        Sale
+    </th>
+    <th class="w3-center">
+        Account
     </th>
     </tr>
     <% for(const Client of Clients.sort((a,b) => { 
@@ -38,28 +41,32 @@
     <td style="display: none ;">
         <%= Client.id %>
     </td>
-    <td style="display: none ;">
-        <%= Client.barcode.name %>
-    </td>
-    <td> 
+    <td class="w3-center"> 
         <div class="w3-container w3-padding-16 w3-center">
             <img src="assets/images/favorite.png" class="w3-square w3-margin-right" style="width:46px">
         </div>
     </td>
 
-    <td> 
-        <%= Client.firstname %>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= Client.firstname %>
+        </div>
+
     </td>
 
-    <td> 
-        <%= Client.lastname %>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= Client.lastname %>
+        </div>
     </td>
 
-    <td> 
-        <%= `R${Client.balance}`%>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= `R${Client.balance}`%>
+        </div> 
     </td>
-    <td> 
-        <% if(parseFloat(Client.balance) > 0){ %>
+    <td class="w3-center"> 
+        <% if(parseFloat(Client.balance) >= 0){ %>
 
             <div class="w3-container w3-padding-16 w3-center">
                 <img src="assets/images/good.png" class="w3-square w3-margin-right" style="width:46px">
@@ -71,25 +78,51 @@
             <div class="w3-container w3-padding-16 w3-center">
                 <img src="assets/images/bad.png" class="w3-square w3-margin-right" style="width:46px">
             </div>
-
+            test
         <% } %>
     </td>
-    <td> 
-        <div class="w3-center">
-            <img 
-            <%= `src=assets/images/Barcodes/${Client.barcode.name}.png` %>
-            class="w3-square w3-margin-right" style="width:150px">
+    <td class="w3-center">
+        <div class="w3-container w3-padding-16 w3-center">
+            <div>
+                <img src="assets/images/id-card.png" class="w3-square w3-margin-right" style="width:46px">
+            </div>
+            <%= `${Client.barcode.name.toUpperCase()}` %>
         </div>
-
-     </td>
-
-    <td>
-        <div class="btn-group-center">
-            <button class="w3-button w3-orange">&nbsp Edit &nbsp</button>
-            <button class="w3-button w3-blue">Place Order</button>  
-            <button class="w3-button w3-teal">Top Up</button>  
+    </td>
+    <td class="w3-center" style="display: none;">
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= `${Client.cellnumber}` %>
         </div>
-    </td>         
+    </td>
+    <td class="w3-center" style="display: none;">
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= `${Client.identitynumber}` %>
+        </div>
+    </td>
+    <td class="w3-center" style="display: none;">
+        <div class="w3-container w3-padding-16 w3-center">
+            <%= `${Client.email}` %>
+        </div>
+    </td>
+    <td class="w3-center">
+        <div class="w3-container w3-padding-16 w3-center">
+            <div class="btn-group-center">
+                <button class="w3-button w3-blue w3-round">Pay Debt</button>  
+                <button class="w3-button w3-teal w3-round" onclick="ToggleModal('ProductCardPurchaseModal');GetAllProductsForPurchase('CardPurchaseProductsList');PopulateClientBalanceforPurchase('<%= Client.id %>');">Place Order</button>
+            </div>
+        </div>
+    </td> 
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16 w3-center">
+            <div class="btn-group-center">
+                <% if(User.isAdmin){ %>
+                    <button class="w3-button w3-green w3-round">History</button>
+                    <button class="w3-button w3-orange w3-round" onclick="ToggleModal('ModifyClientModal');PopulateModifyExisitingClientForm('<%= Client.id %>')">&nbsp Edit &nbsp</button>
+                    <button class="w3-button w3-red w3-round" onclick="ToggleModal('LoaderModal');DeleteClient('<%= Client.id %>');">Delete</button>     
+                <% } %>
+            </div>   
+        </div>
+    </td>        
     </tr>
     <% } %>
 </table>

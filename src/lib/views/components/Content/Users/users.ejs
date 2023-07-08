@@ -1,4 +1,4 @@
-<table id="UserManagementTable" style="width: 100%;">
+<table id="UserManagementTable" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" style="width: 100%;">
     <tr>
     <th>
         Avatar
@@ -84,8 +84,15 @@
 
     <td>
         <div class="btn-group-center">
-            <button class="w3-button w3-orange">&nbsp Edit &nbsp</button>
-            <button class="w3-button w3-red" onclick="DeleteUser('<%= User.id %>');">Delete</button>     
+
+            <% if(CurrentUser.isAdmin){ %>
+                <button class="w3-button w3-orange w3-round">&nbsp Edit &nbsp</button>
+
+                <%    if(User.isAdmin && CurrentUser.username.toUpperCase() == "ROOT" || !User.isAdmin) {%>
+                    <button class="w3-button w3-red w3-round" onclick="ToggleModal('LoaderModal');DeleteUser('<%= User.id %>');">Delete</button>   
+                <% } 
+            } %>
+
         </div>
     </td>         
     </tr>

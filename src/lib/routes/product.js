@@ -1,7 +1,7 @@
 
 const Path = require("path");
-const {GetProductByID,AddProduct, UpdateProduct,DeleteProduct} = require("../controllers/Product/product")
-const {GetAllProducts} = require('../controllers/Product/management');
+const {UpdateProduct,DeleteProduct} = require("../controllers/Product/product")
+const {GetAllProducts,CreateProduct,GetAllProductsForPurchase,AddProductToCart,GetProduct} = require('../controllers/Product/management');
 
 module.exports =  [
       {
@@ -12,7 +12,17 @@ module.exports =  [
               mode: 'required',
             }
         },
-        handler: GetProductByID
+        handler: GetProduct
+      },
+      {
+        method: "GET",
+        path: "/product/AddToCart/{id}",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: AddProductToCart
       },
       {
         method: "GET",
@@ -25,9 +35,19 @@ module.exports =  [
         handler: GetAllProducts
       },
       {
+        method: "GET",
+        path: "/product/purchase/all",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: GetAllProductsForPurchase
+      },
+      {
         method: "POST",
-        path: "/product",
-        handler: AddProduct,
+        path: "/product/new",
+        handler: CreateProduct,
         options: {
             auth: {
               mode: 'required',

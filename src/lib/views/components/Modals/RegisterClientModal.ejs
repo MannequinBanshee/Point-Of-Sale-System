@@ -1,5 +1,5 @@
 <div class="w3-modal-content w3-round w3-card-4 w3-animate-zoom" style="max-width:600px">
-    <span onclick="document.getElementById('NewClientModal').style.display='none'"
+    <span onclick="ToggleModal('NewClientModal');DeleteNewBarcodeFromElement('SelectAvailableBarcode')"
     class="w3-button w3-display-topright">&times;</span>
     <div class="w3-center"><br>
     <img src="assets/images/favorite.png" style="width:30%" class="w3-margin-top">
@@ -50,7 +50,7 @@
         </table>
 
         <div style="float: right">
-            <input class="w3-button w3-round w3-green w3-section w3-padding" onclick="ValidateNewClientForm()" type="submit" value="Create">    
+            <input class="w3-button w3-round w3-green w3-section w3-padding w3-round" onclick="ToggleModal('LoaderModal');ValidateNewClientForm();" type="submit" value="Create">    
         </div>
     </div>
     </form>

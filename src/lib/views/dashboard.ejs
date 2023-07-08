@@ -7,7 +7,12 @@
 <link rel="stylesheet" href="assets/css/Shared/w3.css">
 <link rel="stylesheet" href="assets/css/Shared/main.css">
 <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+<script src="assets/js/dashboard/index.js"></script>
 <script src="assets/js/dashboard/Aquisition.js"></script>
+<script src="assets/js/UserManagement/index.js"></script>
+<script src="assets/js/ProductManagement/index.js"></script>
+<script src="assets/js/AccountManagement/index.js"></script>
+<script src="assets/js/AccountManagement/purchases.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </style>
@@ -53,13 +58,14 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
+<div id="SalesDataAquisition">
 
-  <%- include('components/Content/Aquisition') %>
-  
+</div>
+<script type="text/javascript">
+UpdateDashBoardDetails();
+</script>
 
-  <% 
-
-  for(const access of Data.Access){
+<% for(const access of Data.Access){
 
     switch(access.AccessName){
 
@@ -78,7 +84,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 
 
         <div class="dynamic-section" id="Products" style="display: none;">
-          <%- include('components/Content/Products/ProductManagement.ejs') %>
+          <%- include('components/Content/Products/ProductManagement') %>
         </div>
 
         <div class="w3-modal" id="NewProductModal">
@@ -88,6 +94,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <div class="w3-modal" id="NewIngredientModal">
           <%- include('components/Modals/RegisterIngredientModal') %>
         </div>
+
 
       <%
       break;
@@ -104,7 +111,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
         <%- include('components/Modals/RegisterClientModal') %>
       </div>
 
+      <div class="w3-modal" id="ProductCardPurchaseModal">
+        <%- include('components/Modals/ProductCardPurchaseModal') %>
+      </div>
 
+      <div class="w3-modal" id="ModifyClientModal">
+        <%- include('components/Modals/ModifyClientModal') %>
+      </div>
       <%
       break;
 
@@ -153,10 +166,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Raleway", sans-serif}
 </div>
 
 
-<script src="assets/js/dashboard/index.js"></script>
+<div class="w3-modal w3-center" id="LoaderModal">
+  <%- include('components/Modals/LoaderModal') %>
+</div>
+
 <script src="assets/js/shared/ejs.js"></script>
-<script src="assets/js/UserManagement/index.js"></script>
-<script src="assets/js/ProductManagement/index.js"></script>
-<script src="assets/js/AccountManagement/index.js"></script>
+
 </body>
 </html>

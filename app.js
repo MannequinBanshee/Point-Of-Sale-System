@@ -1,9 +1,9 @@
 "use strict";
 const Path = require("path");
-const Inert = require('@hapi/inert');
-const Vision = require('@hapi/vision');
 const Hapi = require('@hapi/hapi');
+const Vision = require('@hapi/vision');
 const Cookie = require('@hapi/cookie');
+const Inert = require('@hapi/inert');
 const Settings = require('./src/settings');
 const winston = require('./src/logger');
 const moment = require('moment');
@@ -22,6 +22,7 @@ const init = async () => {
             }
         } 
     });
+
     await server.register([Inert,Vision,Cookie]);
 
     server.auth.strategy('session', 'cookie', {
@@ -57,6 +58,7 @@ const init = async () => {
 process.on("unhandledRejection", err => {
     try{
         winston.error(err);
+        console.log(err);
     }
     catch{
     console.log(err)

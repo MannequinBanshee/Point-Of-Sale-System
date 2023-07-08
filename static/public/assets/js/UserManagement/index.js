@@ -22,6 +22,7 @@ async function DeleteUser(id) {
     var success = result;
     if(success){
         await GetAllUsers();
+        document.getElementById('LoaderModal').style.display ='none';
     }
 }
 
@@ -38,6 +39,15 @@ async function AddNewClient(form) {
     const result = await $.ajax({
         url: `/client`,
         type: 'POST',
+        data: form.user
+    });
+    return result;
+}
+
+async function UpdateExistingClient(form) {
+    const result = await $.ajax({
+        url: `/client/${form.user.id}`,
+        type: 'PUT',
         data: form.user
     });
     return result;
@@ -156,6 +166,12 @@ async function ValidateNewStaffForm() {
         return false
     }
     return false;
+}
+
+async function RefreshUsers(){
+    await GetAllUsers();
+    document.getElementById('LoaderModal').style.display ='none';
+    return true;
 }
 
 async function AutoRefreshUsers(){

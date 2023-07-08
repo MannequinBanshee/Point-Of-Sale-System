@@ -2,8 +2,8 @@
   "name": "pointofsale",
   "version": "1.0.0",
   "scripts": {
-    "test": "nodemon",
-    "start": "node"
+    "test": "node app",
+    "start": "nodemon app"
   },
   "repository": "git+https://github.com/MannequinBanshee/Point-Of-Sale-System.git",
   "keywords": [],

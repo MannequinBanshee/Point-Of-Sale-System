@@ -6,7 +6,7 @@ const Settings = require("../../settings");
 const dbSettings = Settings[Settings.env].db;
 const winston = require('../../logger');
 const mongoose = require("mongoose");
-var DBuri = `${dbSettings.dialect}://${dbSettings.username}:${dbSettings.password}@${dbSettings.address}:${dbSettings.port}/${dbSettings.database}`;
+var DBuri = `${dbSettings.dialect}://${dbSettings.username}:${dbSettings.password}@${dbSettings.address}:${dbSettings.port}/${dbSettings.database}?ssl=${dbSettings.ssl}&retrywrites=false&maxIdleTimeMS=120000`;
 const Role = require('./role');
 const User = require('./user');
 
@@ -33,6 +33,7 @@ const User = require('./user');
 
     await PopulateModels();
     await CheckForRootUser();
+
 
     return { 
       State: state, 
@@ -101,7 +102,7 @@ const CheckForRootUser = async(error) =>{
       var rootUsername = Settings.rootUser
       var rootPassword = Settings.rootPassword
       var Found = await User.findOne({username: rootUsername})
-      var adminRoles = [];
+      var adminRoles = new Array;
       if(!Found){
         winston.info('Root User not Found in DB.');
 
@@ -139,8 +140,57 @@ const CheckForRootUser = async(error) =>{
     return null;
 };
 
+
+const tempadd100clients = async() =>{
+
+  const Client = require('./client');
+  const JsBarcode = require('jsbarcode');
+  const {createCanvas} = require('canvas');
+  const uuid = require('uuid');
+  const Barcode = require('./barcode')
+
+for(var i=0; i < 100; i++){
+
+  var firstname = `Client${i}`,
+  lastname = `Client${i}`,
+  email = `Client${i}@Client${i}.com`,
+  cellnumber = `0000000000`,
+  idnumber = `0000000000000`,
+  balance = i >= 50 ? -i : i;
+
+  var BarcodeCanvas = createCanvas();
+  var guid = uuid.v1().substring(0,8);
+  JsBarcode(BarcodeCanvas,guid)
+  var CreatedBarcode = await Barcode.create({"name": guid});
+  const canvasData = BarcodeCanvas.toBuffer("image/png");
+  const ServerSidePath = Path.join(__dirname,"../../../static/public/assets/images/Barcodes");
+  if(Fs.existsSync(ServerSidePath)){
+      Fs.writeFileSync(`${ServerSidePath}/${guid}.png`,canvasData);
+  }
+
+  var ReturnBarcode = {"id": CreatedBarcode._id.toString(),"canvasPath":`assets/images/Barcodes/${guid}.png`}
+  var phonePattern = RegExp(/\+27[0-9]{9}|0[0-9]{9}/);
+  var emailPattern = RegExp(/([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})/);
+
+  Client.create({
+  'username':`${firstname}${lastname}`,
+  'firstname': firstname,
+  'lastname': lastname,
+  'email': email != "" ? email.match(emailPattern) ? email : '' : "",
+  'password': `${firstname}${lastname}`,
+  'cellnumber': cellnumber.match(phonePattern) ? cellnumber : "",
+  'identitynumber': idnumber == "" ? 0 : parseInt(idnumber),
+  'balance': balance == "" ? 0 : parseFloat(balance),
+  'barcode': ReturnBarcode.id
+  });
+  
+}
+
+}
+
 module.exports = {
   TestDBConnect,
   PopulateModels,
-  CheckForRootUser
+  CheckForRootUser,
+  tempadd100clients
 }

@@ -13,22 +13,13 @@
             <div class="btn-group w3-right">
               <% 
               
-              var UserManagementAdmin = false;
-             
-              for(const access of Data.Access){
+              if(Data.User.isAdmin){ %>
 
-                if(access.AccessName.toUpperCase() == "USERMANAGEMENT" && access.AuthorityLevel.toUpperCase() == "ADMINISTRATOR"){
-                  UserManagementAdmin = true;
-                }
-              }
-
-              if(UserManagementAdmin){ %>
-
-                <button onclick="ToggleModal('NewAdminModal');GetAdminRoles();;" class="w3-button w3-teal">Add Admin</button>
-                <button onclick="ToggleModal('NewStaffModal');GetStaffRoles();" class="w3-button w3-teal">Add Staff</button>
+                <button onclick="ToggleModal('NewAdminModal');GetAdminRoles();;" class="w3-button w3-teal w3-round">Add Admin</button>
 
               <% } %>
-              <button onclick="GetAllUsers();" class="w3-button w3-teal"><i class="fa fa-refresh"></i></button>
+              <button onclick="ToggleModal('NewStaffModal');GetStaffRoles();" class="w3-button w3-teal w3-round">Add Staff</button>
+              <button onclick="ToggleModal('LoaderModal');RefreshUsers();" class="w3-button w3-teal w3-round"><i class="fa fa-refresh"></i></button>
             </div>
           </div>
         </div>

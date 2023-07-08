@@ -1,6 +1,6 @@
 
 const Path = require("path");
-const {CreateBarcodes,NewBarcode,GetBarcode,GetAllBarcodes} = require('../controllers/Barcode/management');
+const {CreateBarcodes,NewBarcode,GetBarcode,GetAllBarcodes,CreateSingleBarcode,DeleteBarcode,DeleteBarcodeByName} = require('../controllers/Barcode/management');
 
 module.exports =  [
       {
@@ -12,6 +12,26 @@ module.exports =  [
             }
         },
         handler: GetBarcode
+      },
+      {
+        method: "DELETE",
+        path: "/barcode/{id}",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: DeleteBarcode
+      },
+      {
+        method: "DELETE",
+        path: "/barcode/delete/{name}",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: DeleteBarcodeByName
       },
       {
         method: "GET",
@@ -32,6 +52,16 @@ module.exports =  [
             }
         },
         handler: NewBarcode
+      },
+      {
+        method: "GET",
+        path: "/barcode/new/nameonly",
+        options: {
+            auth: {
+              mode: 'required',
+            }
+        },
+        handler: CreateSingleBarcode
       },
       {
         method: "GET",

@@ -1,62 +1,75 @@
-<table style="width: 100%;">
-  <tr>
-  <th>
-      Image
-  </th>
-  <th>
-      Name
-  </th>
-  <th>
-      Price
-  </th>
-  <th>
-      Ingredients
-  </th>
-  <th>
-      Action
-  </th>
-  </tr>
+<table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" style="width: 100%;">
+    <tr>
+    <th class="w3-center">
+        Avatar
+    </th>
+    <th class="w3-center">
+        Name
+    </th>
+    <th class="w3-center">
+        Price
+    </th>
+    <th class="w3-center">
+        Type
+    </th>
+    <th class="w3-center">
+        Ingredients
+    </th>
+    <th class="w3-center">
+        Action
+    </th>
+    </tr>
   <% for(const Product of Products) {%>
-  <tr>
-  <td style="display: none ;">
-      <%= Product.id %>
-  </td>
-  <td> 
-      <div class="w3-container w3-padding-16">
-      <img src="assets/images/sandwich" class="w3-circle w3-margin-right" style="width:46px">
-      </div>
-  </td>
+    <tr>
+    <td style="display: none ;">
+        <%= Product.id %>
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+        <img src="assets/images/burger.png" class="w3-circle w3-margin-right" style="width:46px">
+        </div>
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+        <%= Product.name %>
+        </div>
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+        <%= `R${parseFloat(Product.price)}` %>
+        </div>
+    </td>
+    <td class="w3-center"> 
+        <div class="w3-container w3-padding-16">
+        <%= Product.type %>
+        </div>
+    </td>
 
-  <td> 
-      <div class="w3-container w3-padding-16">
-      <%= Product.image %>
-      </div>
-  </td>
+    <td class="w3-center"> 
+        <div class="w3-round w3-panel w3-light-grey" style="min-width: 400px;max-width: 600px;"> 
+            <div class="w3-container w3-white w3-round w3-margin">
+                <%for(const Ingredient of Product.ingredients){ %>               
+                    <div class="chip" style="margin-block: 5px ;">
+                        <img src="assets/images/Ingredients.png" alt="Ingredients" width="96px" height="96px">
+                        <label hidden ><%= `${Ingredient.id}` %></label>
+                        <%= `${Ingredient.Quantity} x ${Ingredient.Name} ${Ingredient.Mass}g` %>
+                    </div>
+                <%}%>   
+            </div>
+        </div>
 
-  <td> 
-      <div class="w3-container w3-padding-16">
-      <%= Product.name %>
-      </div>
-  </td>
 
-  <td> 
-      <div class="w3-container w3-padding-16">
-      <%= Product.price %>
-      </div>
-  </td>
+    </td>
 
-  <td> 
-      <div class="w3-container w3-padding-16">
-      <%= Product.ingredients %>
-      </div>
-  </td>
 
-  <td>
-      <div class="btn-group-center">
-      <button class="w3-button w3-green">Edit</button>
-      <button class="w3-button w3-green">Delete</button>       
-      </div>
-  </td>         
-  </tr>
+    <td class="w3-center" style="margin-top: auto;margin-bottom: auto;">
+        <div class="w3-panel">
+            <div class="btn-group">
+                <button class="w3-button w3-orange w3-round">Edit</button>
+                <button onclick="ToggleModal('LoaderModal');DeleteProduct('<%= Product.id %>');" class="w3-button w3-red w3-round">Delete</button>       
+            </div>
+        </div>
+    </td>         
+    </tr>
   <% } %>
 </table>

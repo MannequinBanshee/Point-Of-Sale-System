@@ -1,14 +1,13 @@
 <div class="w3-modal-content w3-round w3-card-4 w3-animate-zoom" style="max-width:600px">
-    <span onclick="document.getElementById('NewProductModal').style.display='none'"
+    <span onclick="ToggleModal('NewProductModal');ClearProductForm();"
     class="w3-button w3-display-topright">&times;</span>
     <div class="w3-center"><br>
     <img src="assets/images/burger.png" style="width:30%" class="w3-margin-top">
     </div>
-    <form class="w3-container" action="/Product" method="post">
+    <form id="RegisterNewProductForm" class="w3-container" onsubmit="return false;">
     <div class="w3-section">
         <label><b>Product Name</b></label>
         <input class="w3-input w3-border w3-margin-bottom" type="text" autocomplete="off" placeholder="Enter Product Name" name="name" required>
-        <input id="IngredientsList" style="display:none;" class="w3-input w3-border w3-margin-bottom" autocomplete="off" type="text" name="ingredients" value="" required>
         <table style="width:100%;">
             <tr>
                 <td>
@@ -35,17 +34,14 @@
                         <input class="w3-check" autocomplete="off" type="checkbox" name="vat">
                         <span class="checkmark"></span>
                       </label>
-                </td>
-                <td>
-                    <label><b>Product Image</b></label>
-                    <input class="w3-input w3-border w3-margin-bottom" autocomplete="off" type="file" name="image" >
+                      <input id="AssignedingredientsList" type="hidden" name="ingredients" value="" required>
                 </td>
             </tr>
         </table>
         <div id="NewProductIngredients" style="margin-top: 20px;">
         </div>
         <div style="float: right">
-            <input class="w3-button w3-round w3-green w3-section w3-padding" type="submit" value="Add Product">    
+            <input class="w3-button w3-round w3-green w3-section w3-padding w3-round" onclick="ValidateNewProductForm();" type="submit" value="Add Product">    
         </div>
     </div>
     </form>
